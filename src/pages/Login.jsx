@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 function loginPage(props) {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const buttonTransition = "transition active:scale-95 ease-in-out hover:scale-105"
   const navigate = useNavigate()
   
@@ -23,7 +22,7 @@ function loginPage(props) {
     event.preventDefault();
     // Retrieve users from database.
     try {
-      const response = await axios.post(`${BASE_URL}/login`, { email, password });
+      const response = await axios.post(`https://splitx-backend.onrender.com/login`, { email, password });
 
       if (response.status === 200 && response.data.message === "Success!") {
           sessionStorage.setItem("isLoggedIn", "true");

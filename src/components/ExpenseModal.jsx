@@ -4,7 +4,6 @@ import { IoMdCloseCircle } from "react-icons/io";
 import axios from 'axios';
 
 const ExpenseModal = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const {isModalOpen, toggleModal, theme} = props;
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"))
   //For Inputs
@@ -32,7 +31,7 @@ const ExpenseModal = (props) => {
       if (name && amount && split) {
         const currentUserEmail = currentUser.email;
         const newExpense = { name, amount, status, split };
-        const response = await axios.post(`${BASE_URL}/new-expense`, {currentUserEmail, newExpense})
+        const response = await axios.post(`https://splitx-backend.onrender.com/new-expense`, {currentUserEmail, newExpense})
         toggleModal()
       }
     } catch (error) {
@@ -46,7 +45,7 @@ const ExpenseModal = (props) => {
       try {
         if (isModalOpen) {
           const currentUserEmail = currentUser.email;
-          const response = await axios.post(`${BASE_URL}/friends`, { currentUserEmail });
+          const response = await axios.post(`https://splitx-backend.onrender.com/friends`, { currentUserEmail });
           setFriends(response.data.friends || []);
         }
       } catch (error) {

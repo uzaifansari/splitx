@@ -5,7 +5,6 @@ import NewGroupModal from '../components/NewGroupModal'
 import axios from 'axios'
 
 const GroupsPage = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"))
   const currentUserEmail = currentUser.email
   const [groups, setGroups] = useState([])
@@ -14,7 +13,7 @@ const GroupsPage = (props) => {
     const fetchGroups = async ()=> {
       try {
         if (!props.isModalOpen) {
-          const response = await axios.post(`${BASE_URL}/groups`, {"email": currentUserEmail}) 
+          const response = await axios.post(`https://splitx-backend.onrender.com/groups`, {"email": currentUserEmail}) 
           setGroups(response.data.groups);
         }
       } catch (error) {

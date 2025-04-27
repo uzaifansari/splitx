@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 const NewFriendModal = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const {theme, toggleModal} = props
   //For Inputs
   const [email,setEmail] = useState("")
@@ -18,7 +17,7 @@ const NewFriendModal = (props) => {
       try{
         const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
         const currentUserEmail = currentUser.email
-        const response = await axios.post(`${BASE_URL}/new-friend`, { email, currentUserEmail })
+        const response = await axios.post(`https://splitx-backend.onrender.com/new-friend`, { email, currentUserEmail })
         toast.success(response.data.message)
         setTimeout(() => toggleModal(), 1000);
       }

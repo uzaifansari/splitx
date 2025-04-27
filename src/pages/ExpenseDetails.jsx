@@ -10,7 +10,6 @@ import { motion } from "framer-motion"
 
 
 const ExpenseDetails = (props) => {
-    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const {state} = useLocation()
     const navigate = useNavigate()
     const expense = state?.expense
@@ -21,7 +20,7 @@ const ExpenseDetails = (props) => {
     useEffect(() => {
         const fetchDetails = async ()=> {  
             try {
-                const response = await axios.post(`${BASE_URL}/expense-details`, {"expense_id": expense._id})
+                const response = await axios.post(`https://splitx-backend.onrender.com/expense-details`, {"expense_id": expense._id})
                 const fetched_member_details = response?.data.members_details
                 setMembersDetails(fetched_member_details)
                 console.log(response.data);
@@ -35,7 +34,7 @@ const ExpenseDetails = (props) => {
     const deleteExpense = async ()=> {
         if (currentUserEmail==expense.created_by.email) {
             const expense_id = expense?._id
-            const response = await axios.delete(`${BASE_URL}/delete-expense/${expense_id}`)
+            const response = await axios.delete(`https://splitx-backend.onrender.com/delete-expense/${expense_id}`)
     
             if (response.data.message == "success!") {
                 console.log(response.data);

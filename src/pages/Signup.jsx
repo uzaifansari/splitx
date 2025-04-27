@@ -6,7 +6,6 @@ import axios from 'axios'
 
 
 const SignupPage = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const buttonTransition = "transition active:scale-95 ease-in-out hover:scale-105"
   const navigate = useNavigate()
   
@@ -38,7 +37,7 @@ const SignupPage = (props) => {
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/signup`, {
+      const response = await axios.post(`https://splitx-backend.onrender.com/signup`, {
         name,
         email,
         password,

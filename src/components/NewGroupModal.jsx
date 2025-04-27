@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 const NewGroupModal = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const {theme, toggleModal, isModalOpen} = props
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"))
   
@@ -31,7 +30,7 @@ const NewGroupModal = (props) => {
       try {
         if (isModalOpen) {
           const currentUserEmail = currentUser.email;
-          const response = await axios.post(`${BASE_URL}/friends`, { currentUserEmail });
+          const response = await axios.post(`https://splitx-backend.onrender.com/friends`, { currentUserEmail });
           setMembers(response.data.friends || []);
         }
       } catch (error) {
@@ -46,7 +45,7 @@ const NewGroupModal = (props) => {
       try{
         const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
         const currentUserEmail = currentUser.email
-        const response = await axios.post(`"${BASE_URL}/new-group`, { "email": currentUserEmail, "group_name": groupName , "members": split  })
+        const response = await axios.post(`"https://splitx-backend.onrender.com/new-group`, { "email": currentUserEmail, "group_name": groupName , "members": split  })
         toast.success(response.data.message)
         setTimeout(() => toggleModal(), 1000);
       }

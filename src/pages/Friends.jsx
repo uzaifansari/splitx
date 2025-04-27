@@ -6,7 +6,6 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 const FriendsPage = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const {theme, isModalOpen, toggleModal, newFriendIcon} = props
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"))
   const [friends,setFriends] = useState([])
@@ -16,7 +15,7 @@ const FriendsPage = (props) => {
       try {
         if (!isModalOpen) {
           const currentUserEmail = currentUser.email;
-          const response = await axios.post(`${BASE_URL}/friends`, { currentUserEmail });
+          const response = await axios.post(`https://splitx-backend.onrender.com/friends`, { currentUserEmail });
           setFriends(response.data.friends || []);
           console.log(response.data)
         }

@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import defaultExpensePic from "../assets/defaultExpensePic.png"
 
 const FriendDetails = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const buttonTransition = "transition active:scale-95 ease-in-out hover:scale-105"
   const navigate = useNavigate()
   const location = useLocation()
@@ -25,7 +24,7 @@ const FriendDetails = (props) => {
         if (friend?.email) {
           const currentUserEmail = currentUser.email
         
-          const response = await axios.post(`${BASE_URL}/friend/${friend.email}`, {currentUserEmail});
+          const response = await axios.post(`https://splitx-backend.onrender.com/friend/${friend.email}`, {currentUserEmail});
           const friend_details = response.data.friend_details
           setFriendDetails(friend_details);
           setCommonExpenses(friend_details.common_expenses)
@@ -40,7 +39,7 @@ const FriendDetails = (props) => {
   }, [friend]);
 
   const handleSettleUp = async (expense) => {
-    const response = await axios.put(`${BASE_URL}/settle-expense/${expense._id}`, {"current_user_email":currentUser.email})
+    const response = await axios.put(`https://splitx-backend.onrender.com/settle-expense/${expense._id}`, {"current_user_email":currentUser.email})
     console.log(response.data);
     
   }

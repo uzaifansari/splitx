@@ -6,7 +6,6 @@ import AddExpenses from '../components/AddExpenses'
 import ExpenseModal from '../components/ExpenseModal'
 
 const HomePage = (props) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate()
   // Retrieving the currentUser data
   const [currentUser, setCurrentUser] = useState(()=>{
@@ -26,7 +25,7 @@ const HomePage = (props) => {
   useEffect(() => {
     const fetchExpenses = async ()=> {
       if (!props.isExpenseModalOpen) {
-        const response = await axios.post(`${BASE_URL}/expenses`, {"email": currentUser.email} ) 
+        const response = await axios.post(`https://splitx-backend.onrender.com/expenses`, {"email": currentUser.email} ) 
         const fetchedExpenses = response.data.expenses
         
         if (fetchedExpenses) {
