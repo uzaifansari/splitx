@@ -38,8 +38,9 @@ const NewFriendModal = (props) => {
   }
   
   return (
-    <div className="fixed inset-0 z-10 bg-black/50 backdrop-blur-md">
+    <div onClick={toggleModal} className="fixed inset-0 z-10 bg-black/50 backdrop-blur-md">
       <motion.div
+        onClick={(event)=>event.stopPropagation()}
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.1, ease: [0, 0.71, 0.2, 1.01] }}

@@ -57,8 +57,8 @@ const ExpenseModal = (props) => {
   }, [isModalOpen])
   
   return (
-    <div className='fixed inset-0 z-10 bg-black/50 backdrop-blur-md p-20' >
-        <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.1, ease: [0, 0.71, 0.2, 1.01]}} className={`w-72 h-72 lg:w-96 lg:h-96 z-1000 flex flex-col items-center inset-0 absolute rounded-xl m-auto ${theme==="bg-black"?"bg-white":"bg-black"}`}>
+    <div onClick={toggleModal} className='fixed inset-0 z-10 bg-black/50 backdrop-blur-md p-20' >
+        <motion.div onClick={(event)=> event.stopPropagation()} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.1, ease: [0, 0.71, 0.2, 1.01]}} className={`w-72 h-72 lg:w-96 lg:h-96 z-1000 flex flex-col items-center inset-0 absolute rounded-xl m-auto ${theme==="bg-black"?"bg-white":"bg-black"}`}>
             <div className="flex justify-between p-3 w-full">
                 <h1 className={`text-2xl ${theme==="bg-black"?"text-black":"text-white"}`}>New Expense</h1>
                 <button onClick={toggleModal}>

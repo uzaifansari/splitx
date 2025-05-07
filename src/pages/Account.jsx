@@ -69,8 +69,8 @@ const Account = (props) => {
         
         {/* Logout Modal */}
         {isModalOpen && (
-        <div className="fixed inset-0 z-10 bg-black/50 backdrop-blur-md flex justify-center items-center">
-            <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.1, ease: [0, 0.71, 0.2, 1.01]}} className={`w-60 h-48 md:h-80 md:w-80 flex flex-col justify-around rounded-xl ${props.theme==="bg-black"?"bg-white text-black":"bg-black text-white"}`}>
+        <div onClick={()=> setIsModalOpen(false)} className="fixed inset-0 z-10 bg-black/50 backdrop-blur-md flex justify-center items-center">
+            <motion.div onClick={(event)=>event.stopPropagation()} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.1, ease: [0, 0.71, 0.2, 1.01]}} className={`w-60 h-48 md:h-80 md:w-80 flex flex-col justify-around rounded-xl ${props.theme==="bg-black"?"bg-white text-black":"bg-black text-white"}`}>
                 <div className="pl-8 md:pl-16 flex gap-3 items-center">
                     <div>
                         <FaExclamationTriangle className="size-8 fill-red-500"/>
