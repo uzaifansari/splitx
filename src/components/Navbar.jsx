@@ -42,38 +42,40 @@ function Navbar(props) {
             {props.threeDotIcon}
           </button>   
         </div>
+      </div>
         {/* Hamburger Menu */}
         {menu && (
-          <motion.div animate={{ y: 10 }} transition={{ type: "Tween", stiffness: 100 }} className={`w-fit h-fit absolute top-14 right-4 overflow-hidden shadow-lg rounded-xl ${location.pathname === "/home" || "/account"?  "" : "hidden"} ${props.theme==="bg-black"?"bg-white text-black":"bg-black text-white"}`}>
-            <ul className="flex flex-col w-fit gap-0">
-              <li className={`${buttonTransition} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
-                <button className={`w-10 h-10 flex justify-center items-center rounded-full`}>
-                  {props.plusIcon}
-                </button>
-                <h1>Add Expense</h1>
-              </li>
-              <li className={`${buttonTransition} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
-                <button className={`w-10 h-10 flex justify-center items-center rounded-full`}>
-                  {props.newFriendIcon}
-                </button>
-                <h1>Add Friend</h1>
-              </li>
-              <li className={`${buttonTransition} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
-                <button className={`w-10 h-10 flex justify-center items-center rounded-full `}>
-                  {props.newGroupIcon}
-                </button>
-                <h1>Create Group</h1>
-              </li>
-              <li onClick={props.toggleTheme} className={`${buttonTransition} ${location.pathname === "/account"? "hidden" : ""} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
-                <button className={`w-10 h-10 flex justify-center items-center rounded-full`}>
-                  {props.themeIcon}
-                </button>
-                <h1>Theme</h1>
-              </li>
-            </ul>
-          </motion.div >
+          <div onClick={toggleMenu} className="fixed inset-0 z-10 bg-black/50 backdrop-blur-md flex justify-center items-center">
+            <motion.div animate={{ y: 10 }} transition={{ type: "Tween", stiffness: 100 }} className={`w-fit h-fit absolute top-14 right-4 overflow-hidden shadow-lg rounded-xl ${location.pathname === "/home" || "/account"?  "" : "hidden"} ${props.theme==="bg-black"?"bg-white text-black":"bg-black text-white"}`}>
+              <ul className="flex flex-col w-fit gap-0">
+                <li className={`${buttonTransition} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
+                  <button className={`w-10 h-10 flex justify-center items-center rounded-full`}>
+                    {props.plusIcon}
+                  </button>
+                  <h1>Add Expense</h1>
+                </li>
+                <li className={`${buttonTransition} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
+                  <button className={`w-10 h-10 flex justify-center items-center rounded-full`}>
+                    {props.newFriendIcon}
+                  </button>
+                  <h1>Add Friend</h1>
+                </li>
+                <li className={`${buttonTransition} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
+                  <button className={`w-10 h-10 flex justify-center items-center rounded-full `}>
+                    {props.newGroupIcon}
+                  </button>
+                  <h1>Create Group</h1>
+                </li>
+                <li onClick={props.toggleTheme} className={`${buttonTransition} ${location.pathname === "/account"? "hidden" : ""} w-full flex items-center justify-start gap-2 p-2 cursor-pointer`}>
+                  <button className={`w-10 h-10 flex justify-center items-center rounded-full`}>
+                    {props.themeIcon}
+                  </button>
+                  <h1>Theme</h1>
+                </li>
+              </ul>
+            </motion.div >
+          </div>
         )}
-      </div>
     </>
   );
 }
