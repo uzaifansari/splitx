@@ -7,7 +7,8 @@ import profilePic from "../assets/defaultProfilePic.png";
 import { MdOutlineDelete } from "react-icons/md";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { motion } from "framer-motion"
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const ExpenseDetails = (props) => {
     const {state} = useLocation()
@@ -16,9 +17,11 @@ const ExpenseDetails = (props) => {
     const currentUserEmail = JSON.parse(sessionStorage.getItem("currentUser")).email
 
     const [membersDetails, setMembersDetails] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchDetails = async ()=> {  
+            setLoading(true)
             try {
                 const response = await axios.post(`https://splitx-backend.onrender.com/expense-details`, {"expense_id": expense._id})
                 const fetched_member_details = response?.data.members_details
@@ -26,6 +29,8 @@ const ExpenseDetails = (props) => {
                 console.log(response.data);
             } catch (error) {
                 console.log(error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchDetails()
@@ -66,29 +71,33 @@ const ExpenseDetails = (props) => {
         </div>
         
         <div className="flex flex-col md:flex-row md:gap-32 md:px-10">
-            <div className={`Card w-full h-fit mt-8 rounded-lg ${props.theme==="bg-black"?"bg-zinc-700":"bg-zinc-400"}`}>
-                <div className="flex justify-between items-center pt-6 px-6 text-xl">
-                    <h1>{expense?.name}</h1>
-                    <h1>${expense?.amount}</h1>
-                </div>
-                <div className={`flex px-6 mt-2 ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>
-                    <h1>Apr 12, 2025</h1>
-                </div>
-                <div className="flex items-center justify-between p-6">
-                    <div className="flex flex-col items-start justify-between gap-2">
-                        <h1 className={`text-lg ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>Created By</h1>
-                        <h1 className={`text-lg font-semibold truncate ${props.theme==="bg-black"?"text-zinc-300":"text-zinc-700"}`}>{expense?.created_by.name}</h1>
+            {loading ? (
+                <Skeleton className={`rounded-lg mt-8 w-full h-48 md:w-[40.5rem] md:h-48 ${props.theme=="bg-black"?"bg-zinc-300":"bg-zinc-200"}`} inline/>
+            ) : (
+                <div className={`Card w-full h-fit mt-8 rounded-lg ${props.theme==="bg-black"?"bg-zinc-700":"bg-zinc-400"}`}>
+                    <div className="flex justify-between items-center pt-6 px-6 text-xl">
+                        <h1>{expense?.name}</h1>
+                        <h1>${expense?.amount}</h1>
                     </div>
-                    <div className="flex flex-col items-start justify-between gap-2">
-                        <h1 className={`text-lg ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>Status</h1>
-                        <h1 className={`text-lg font-semibold ${props.theme==="bg-black"?"text-zinc-300":"text-zinc-700"}`}>{expense?.status=="unsettled"?"Unsettled":"Settled"}</h1>
+                    <div className={`flex px-6 mt-2 ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>
+                        <h1>Apr 12, 2025</h1>
                     </div>
-                    <div className="flex flex-col items-start justify-between gap-2">
-                        <h1 className={`text-lg ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>Split</h1>
-                        <h1 className={`text-lg font-semibold ${props.theme==="bg-black"?"text-zinc-300":"text-zinc-700"}`}>Equally</h1>
+                    <div className="flex items-center justify-between p-6">
+                        <div className="flex flex-col items-start justify-between gap-2">
+                            <h1 className={`text-lg ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>Created By</h1>
+                            <h1 className={`text-lg font-semibold truncate ${props.theme==="bg-black"?"text-zinc-300":"text-zinc-700"}`}>{expense?.created_by.name}</h1>
+                        </div>
+                        <div className="flex flex-col items-start justify-between gap-2">
+                            <h1 className={`text-lg ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>Status</h1>
+                            <h1 className={`text-lg font-semibold ${props.theme==="bg-black"?"text-zinc-300":"text-zinc-700"}`}>{expense?.status=="unsettled"?"Unsettled":"Settled"}</h1>
+                        </div>
+                        <div className="flex flex-col items-start justify-between gap-2">
+                            <h1 className={`text-lg ${props.theme==="bg-black"?"text-zinc-400":"text-zinc-700"}`}>Split</h1>
+                            <h1 className={`text-lg font-semibold ${props.theme==="bg-black"?"text-zinc-300":"text-zinc-700"}`}>Equally</h1>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             <div className="Members w-full mt-4">
                 <h1 className="text-2xl font-semibold mb-2">Members</h1>
@@ -100,7 +109,25 @@ const ExpenseDetails = (props) => {
                 </div>
                 
                 {/* Member Details Table for displaying members and their respective share and balances (To Do: CREATE A SEPARATE COMPONENT) */}
-                {membersDetails.map((member,index) => (
+                {loading ? (
+                    Array(3).fill().map((_,index) => (
+                        <div key={index} className="grid grid-cols-4 items-center py-3 text-base">
+                            <div className="flex items-center gap-2">
+                                <Skeleton className={`rounded-lg w-20 h-8 md:w-24 md:h-10 ${props.theme=="bg-black"?"bg-zinc-300":"bg-zinc-200"}`} inline/>
+                            </div>
+                            <div className="flex justify-end">
+                                <Skeleton className={`rounded-lg w-20 h-8 md:w-24 md:h-10 ${props.theme=="bg-black"?"bg-zinc-300":"bg-zinc-200"}`} inline/>
+                            </div>
+                            <div className="flex justify-end">
+                                <Skeleton className={`rounded-lg w-20 h-8 md:w-24 md:h-10 ${props.theme=="bg-black"?"bg-zinc-300":"bg-zinc-200"}`} inline/>
+                            </div>
+                            <div className="flex justify-end">
+                                <Skeleton className={`rounded-lg w-20 h-8 md:w-24 md:h-10 ${props.theme=="bg-black"?"bg-zinc-300":"bg-zinc-200"}`} inline/>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    membersDetails.map((member,index) => (
                     <div key={index} className="grid grid-cols-4 items-center py-3 text-base">
                         <div className="flex items-center gap-2">
                             <img src={profilePic} alt="profilepic" className="w-8 h-8 rounded-md bg-zinc-500"/>
@@ -110,11 +137,12 @@ const ExpenseDetails = (props) => {
                         <div className="text-right">{member.paid}</div>
                         <div className="text-right text-green-500 font-semibold">{member.balance}</div>
                     </div>
-                ))}
+                    ))
+                )}
             </div>
         </div>
 
-        {/* Delte Expense Confirmation Modal (To Do: CREATE A SEPARATE COMPONENT)  */}
+        {/* Delete Expense Confirmation Modal (To Do: CREATE A SEPARATE COMPONENT)  */}
         {isModalOpen &&(
             <div className="fixed inset-0 z-10 bg-black/50 backdrop-blur-md flex justify-center items-center">
                 <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.1, ease: [0, 0.71, 0.2, 1.01]}} className={`w-60 h-48 md:h-80 md:w-80 flex flex-col justify-around rounded-xl ${props.theme==="bg-black"?"bg-white text-black":"bg-black text-white"}`}>
