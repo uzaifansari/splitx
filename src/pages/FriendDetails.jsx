@@ -110,7 +110,7 @@ const FriendDetails = (props) => {
                 </div>
   
                 <div className="flex justify-end items-start w-full">
-                  <button disabled={expense.dues_cleared} onClick={()=>handleSettleUp(expense)} className={`p-1 rounded-lg text-sm ${expense.dues_cleared?"":buttonTransition} ${props.theme==="bg-black"?"bg-zinc-400 text-black":"bg-zinc-700 text-zinc-200"} ${expense.dues_cleared?"cursor-not-allowed":"cursor-pointer"}`}>{expense.dues_cleared?"Dues Clear!":"Settle Up"}</button>
+                  <button disabled={expense.dues_cleared} onClick={(e) => { e.stopPropagation(); handleSettleUp(expense) }} className={`p-1 rounded-lg text-sm ${expense.dues_cleared?"":buttonTransition} ${props.theme==="bg-black"?"bg-zinc-400 text-black":"bg-zinc-700 text-zinc-200"} ${expense.dues_cleared?"cursor-not-allowed":"cursor-pointer"}`}>{expense.dues_cleared?"Dues Clear!":"Settle Up"}</button>
                 </div>
               </div>
             ))
